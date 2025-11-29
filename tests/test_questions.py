@@ -1,4 +1,8 @@
 import pytest
+from main_page import MainPage
+
+
+
 
 @pytest.mark.parametrize("question_number, question_text", [
     (1, "Сколько это стоит? И как оплатить?"),
@@ -11,7 +15,10 @@ import pytest
     (8, "Я живу за МКАДом, привезёте?")
 ])
 def test_dropdown_list(question_number, question_text):
-    page = QuestionsPage()  # предположим, что у вас есть класс QuestionsPage
+    driver = webdriver.Chrome()  
+    page = MainPage(driver)
+    # остальной код теста
+  
     page.open()
     page.click_arrow(question_number)  # метод, который кликает по стрелке вопроса с указанным номером
     assert page.is_text_opened(question_number), f"Текст для вопроса '{question_text}' не открылся при нажатии на стрелку"
