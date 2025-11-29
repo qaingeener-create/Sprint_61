@@ -1,5 +1,8 @@
+import allure
 import pytest
 from main_page import MainPage
+from selenium import webdriver
+
 
 
 
@@ -15,7 +18,8 @@ from main_page import MainPage
     (8, "Я живу за МКАДом, привезёте?")
 ])
 def test_dropdown_list(question_number, question_text):
-    driver = webdriver.Chrome()  
+    driver = webdriver.Chrome()
+  
     page = MainPage(driver)
     # остальной код теста
   
