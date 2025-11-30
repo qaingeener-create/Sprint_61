@@ -1,6 +1,7 @@
 import allure
 import pytest
-from main_page import MainPage
+from pages.main_page import MainPage
+   
 from selenium import webdriver
 
 

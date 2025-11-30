@@ -1,9 +1,9 @@
 import allure
 import pytest
-from main_page import MainPage
+from pages.main_page import MainPage
 from selenium import webdriver
 
-from selenium import webdriver
+
 
 @pytest.mark.parametrize("order_data", [
     {

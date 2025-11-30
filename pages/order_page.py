@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-
+from pages.main_page import MainPage
 
 class OrderPage:
     def __init__(self, driver):
