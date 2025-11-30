@@ -1,6 +1,6 @@
 import allure
 import pytest
-from pages.main_page import MainPage
+from main_page import MainPage
 from selenium import webdriver
 
 from selenium import webdriver
@@ -21,10 +21,11 @@ from selenium import webdriver
         "phone": "0987654321"
     }
 ])
-def test_order_flow(order_data):
+def test_order_flow(order_data: dict[str, str]):
     driver = webdriver.Chrome()  # или другой браузер, который вы используете
     page = MainPage(driver) 
-    page.open(https://qa-scooter.praktikum-services.ru/)
+    page.open("https://qa-scooter.praktikum-services.ru/")
+
 
     # Тестирование первой точки входа - кнопка "Заказать" вверху страницы
     order_page_top = page.click_order_button_top()  # метод для клика по кнопке "Заказать" вверху
@@ -32,7 +33,8 @@ def test_order_flow(order_data):
     assert order_page_top.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
 
     # Повторное открытие главной страницы для новой попытки
-    page.open(https://qa-scooter.praktikum-services.ru/)
+    page.open("https://qa-scooter.praktikum-services.ru/")
+
 
     # Тестирование второй точки входа - кнопка "Заказать" внизу страницы
     order_page_bottom = page.click_order_button_bottom()  # метод для клика по кнопке "Заказать" внизу
@@ -41,10 +43,12 @@ def test_order_flow(order_data):
 
     # Проверка перехода по лого "Самоката"
     page = MainPage()
-    page.open()
+    page.open("https://qa-scooter.praktikum-services.ru/")
+
     assert page.click_scooter_logo_and_check(), "Не удалось перейти на главную страницу 'Самоката'"
 
     # Проверка перехода по лого Яндекса
     page = MainPage()
-    page.open()
+    page.open("https://qa-scooter.praktikum-services.ru/")
+
     assert page.click_yandex_logo_and_check(), "Не удалось перейти на главную страницу Дзена"
