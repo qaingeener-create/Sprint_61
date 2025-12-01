@@ -1,7 +1,7 @@
 import allure
 import pytest
+from config import BASE_URL
 from pages.main_page import MainPage
-   
 from selenium import webdriver
 
 
