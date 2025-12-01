@@ -39,10 +39,10 @@ class MainPage:
 
     def click_scooter_logo_and_check(self):
         self.driver.find_element(*self.SCOOTER_LOGO).click()
-    # Проверка перехода на главную страницу "Самоката"
-    assert self.driver.current_url == "https://qa-scooter.praktikum-services.ru/", "Не удалось перейти на главную страницу 'Самоката'"
+        assert self.driver.current_url == "https://qa-scooter.praktikum-services.ru/", "Не удалось перейти на главную страницу 'Самоката'"
 
     def click_yandex_logo_and_check(self):
         self.driver.find_element(*self.YANDEX_LOGO).click()
-    # Проверка перехода на главную страницу Дзена
-    assert self.driver.current_url.startswith("https://dzen.ru/"), "Не удалось перейти на главную страницу Дзена"
+        assert self.driver.current_url.startswith("https://dzen.ru/"), "Не удалось перейти на главную страницу Дзена"
+
+

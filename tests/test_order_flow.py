@@ -1,54 +1,89 @@
 import allure
 import pytest
+from config import BASE_URL
 from pages.main_page import MainPage
 from selenium import webdriver
 
+class TestOrderFlow:
+    @pytest.mark.parametrize("order_data", [
+        {
+            "name": "Иван",
+            "surname": "Иванов",
+            "address": "ул. Примерная, д. 1",
+            "metro_station": "Щёлковская",
+            "phone": "1234567890"
+        },
+        {
+            "name": "Мария",
+            "surname": "Петрова",
+            "address": "пр-т Ленинский, д. 2",
+            "metro_station": "ВДНХ",
+            "phone": "0987654321"
+        }
+    ])
+    def test_order_flow_top_button(self, driver, order_data: dict[str, str]):
+        page = MainPage(driver)
+        page.open(BASE_URL)
 
+        # Тестирование первой точки входа - кнопка "Заказать" вверху страницы
+        order_page_top = page.click_order_button_top()
+        order_page_top.fill_form(order_data["name"], order_data["surname"], order_data["address"], order_data["metro_station"], order_data["phone"])
+        
+        # Нажимаем кнопку "Далее"
+        order_page_top.click_next_button()
 
-@pytest.mark.parametrize("order_data", [
-    {
-        "name": "Иван",
-        "surname": "Иванов",
-        "address": "ул. Примерная, д. 1",
-        "metro_station": "Щёлковская",
-        "phone": "1234567890"
-    },
-    {
-        "name": "Мария",
-        "surname": "Петрова",
-        "address": "пр-т Ленинский, д. 2",
-        "metro_station": "ВДНХ",
-        "phone": "0987654321"
-    }
-])
-def test_order_flow(order_data: dict[str, str]):
-    driver = webdriver.Chrome()  # или другой браузер, который вы используете
-    page = MainPage(driver) 
-    page.open("https://qa-scooter.praktikum-services.ru/")
+        # Заполняем дополнительные поля
+        order_page_top.select_delivery_time("Когда привезти самокат")
+        order_page_top.select_rental_period("Срок аренды")
+        order_page_top.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
+        order_page_top.enter_comment("Комментарий для курьера")
 
+        assert order_page_top.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
 
-    # Тестирование первой точки входа - кнопка "Заказать" вверху страницы
-    order_page_top = page.click_order_button_top()  # метод для клика по кнопке "Заказать" вверху
-    order_page_top.fill_form(order_data["name"], order_data["surname"], order_data["address"], order_data["metro_station"], order_data["phone"])  # метод для заполнения формы заказа
-    assert order_page_top.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
+    @pytest.mark.parametrize("order_data", [
+        {
+            "name": "Иван",
+            "surname": "Иванов",
+            "address": "ул. Примерная, д. 1",
+            "metro_station": "Щёлковская",
+            "phone": "1234567890"
+        },
+        {
+            "name": "Мария",
+            "surname": "Петрова",
+            "address": "пр-т Ленинский, д. 2",
+            "metro_station": "ВДНХ",
+            "phone": "0987654321"
+        }
+    ])
+    def test_order_flow_bottom_button(self, driver, order_data: dict[str, str]):
+        page = MainPage(driver)
+        page.open(BASE_URL)
 
-    # Повторное открытие главной страницы для новой попытки
-    page.open("https://qa-scooter.praktikum-services.ru/")
+        # Тестирование второй точки входа - кнопка "Заказать" внизу страницы
+        order_page_bottom = page.click_order_button_bottom()
+        order_page_bottom.fill_form(order_data["name"], order_data["surname"], order_data["address"], order_data["metro_station"], order_data["phone"])
+        
+        # Нажимаем кнопку "Далее"
+        order_page_bottom.click_next_button()
 
+        # Заполняем дополнительные поля
+        order_page_bottom.select_delivery_time("Когда привезти самокат")
+        order_page_bottom.select_rental_period("Срок аренды")
+        order_page_bottom.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
+        order_page_bottom.enter_comment("Комментарий для курьера")
 
-    # Тестирование второй точки входа - кнопка "Заказать" внизу страницы
-    order_page_bottom = page.click_order_button_bottom()  # метод для клика по кнопке "Заказать" внизу
-    order_page_bottom.fill_form(order_data["name"], order_data["surname"], order_data["address"], order_data["metro_station"], order_data["phone"])  # метод для заполнения формы заказа
-    assert order_page_bottom.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
+        assert order_page_bottom.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
 
-    # Проверка перехода по лого "Самоката"
-    page = MainPage()
-    page.open("https://qa-scooter.praktikum-services.ru/")
+    def test_scooter_logo_link(self, driver):
+        page = MainPage(driver)
+        page.open(BASE_URL)
 
-    assert page.click_scooter_logo_and_check(), "Не удалось перейти на главную страницу 'Самоката'"
+        assert page.click_scooter_logo_and_check(), "Не удалось перейти на главную страницу 'Самоката'"
 
-    # Проверка перехода по лого Яндекса
-    page = MainPage()
-    page.open("https://qa-scooter.praktikum-services.ru/")
+    def test_yandex_logo_link(self, driver):
+        page = MainPage(driver)
+        page.open(BASE_URL)
 
-    assert page.click_yandex_logo_and_check(), "Не удалось перейти на главную страницу Дзена"
+        assert page.click_yandex_logo_and_check(), "Не удалось перейти на главную страницу Дзена"
+
