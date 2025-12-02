@@ -24,10 +24,10 @@ class MainPage:
         return len(self.driver.find_elements(By.CSS_SELECTOR, text_selector)) > 0
 
     # Локаторы для элементов на главной странице
-    ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".top-order-button")
-    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".bottom-order-button")
-    SCOOTER_LOGO = (By.ID, "scooter-logo")
-    YANDEX_LOGO = (By.ID, "yandex-logo")
+    ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".button")#root > div > div > div.Home_ThirdPart__LSTEE > div.Home_RoadMap__2tal_ > div.Home_FinishButton__1_cWm > button
+    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".button.Button_Button__ra12g")#root > div > div > div.Header_Header__214zg > div.Header_Nav__AGCXC > button.Button_Button__ra12g
+    SCOOTER_LOGO = (By.ID, "Scooter")
+    YANDEX_LOGO = (By.ID, "Yandex")
 
     def click_order_button_top(self):
         self.driver.find_element(*self.ORDER_BUTTON_TOP).click()
