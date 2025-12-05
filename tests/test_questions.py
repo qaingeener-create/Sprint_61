@@ -1,6 +1,5 @@
-from typing import Literal
-import allure
 import pytest
+import allure
 from config import BASE_URL
 from pages.main_page import MainPage
 from selenium import webdriver
@@ -15,9 +14,9 @@ class TestDropdownList:
         (5, "Можно ли продлить заказ или вернуть самокат раньше?"),
         (6, "Вы привозите зарядку вместе с самокатом?"),
         (7, "Можно ли отменить заказ?"),
-        (8, "Я живу за МКАДом, привезёте?")
+        (8, "Я жизу за МКАДом, привезёте?")
     ])
-    def test_dropdown_list(self, driver, question_number: Literal[1] | Literal[2] | Literal[3] | Literal[4] | Literal[5] | Literal[6] | Literal[7] | Literal[8], question_text: Literal['Сколько это стоит? И как оплатить?'] | Literal['Хочу сразу несколько самокатов! Так можно?'] | Literal['Как рассчитывается время аренды?'] | Literal['Можно ли заказать самокат прямо на сегодня?'] | LiteralString | Literal['Вы привозите зарядку вместе с самокатом?'] | Literal['Можно ли отменить заказ?'] | Literal['Я живу за МКАДом, привезёте?']):
+    def test_dropdown_list(self, driver, question_number, question_text):
         with allure.step("Инициализация драйвера и страницы"):
             page = MainPage(driver)
         
@@ -29,5 +28,6 @@ class TestDropdownList:
         
         with allure.step(f"Проверить, что текст для вопроса '{question_text}' открылся"):
             assert page.is_text_opened(question_number), f"Текст для вопроса '{question_text}' не открылся при нажатии на стрелку"
+
 
 

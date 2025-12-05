@@ -9,12 +9,12 @@ class OrderPage:
         self.wait = WebDriverWait(driver, 10)
 
     # Локаторы для элементов на странице заказа
-    NAME_FIELD = (By.ID, "name")
-    SURNAME_FIELD = (By.ID, "surname")
-    ADDRESS_FIELD = (By.ID, "address")
-    METRO_STATION_SELECT = (By.ID, "metro-station")
-    PHONE_FIELD = (By.ID, "phone")
-    SUCCESS_MESSAGE = (By.CLASS_NAME, "success-message")
+    NAME_FIELD = (By.ID, "* Имя")
+    SURNAME_FIELD = (By.ID, "* Фамилия")
+    ADDRESS_FIELD = (By.ID, "* Адрес : куда привезти заказ")
+    METRO_STATION_SELECT = (By.ID, "select-search__input")
+    PHONE_FIELD = (By.ID, "* Телефон: на него позвонит курьер")
+    BUTTON_DALEE = (By.CLASS_NAME, "Button_Button__ra12g Button_Middle__1CSJM")
 
     def fill_form(self, name, surname, address, metro_station, phone):
         # Методы для заполнения полей формы заказа

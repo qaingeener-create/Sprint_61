@@ -11,21 +11,35 @@ class MainPage:
 
     def open(self):
         self.driver.get("https://qa-scooter.praktikum-services.ru/")
+        self.scroll_into_view()  # Прокручиваем страницу сразу после открытия
 
-    def click_arrow(self, question_number):
-        # Предполагаем, что у каждого вопроса есть уникальный селектор для стрелки
-        arrow_selector = f".question-{question_number}-arrow"
+    def scroll_into_view(self):
+    #Прокручивает страницу так, чтобы нужный элемент стал видимым.
+        element = self.driver.find_element(By.CLASS_NAME, "accordion")
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+
+    def click_arrow(self, heading_id):
+    # Кликаем по заголовку вопроса с указанным ID
+        arrow_selector = f"#{heading_id}"
         arrow = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, arrow_selector)))
         arrow.click()
 
-    def is_text_opened(self, question_number):
-        # Проверяем, что текст вопроса открыт
-        text_selector = f".question-{question_number}-text"
-        return len(self.driver.find_elements(By.CSS_SELECTOR, text_selector)) > 0
+
+    
+   
+    def open_all_questions(self):
+        for i in range(8):  # Предполагаем, что у нас есть 8 вопросов
+            heading_id = f"accordion__heading-{i}"
+            self.click_arrow(heading_id)
+        # Здесь можно добавить небольшую задержку, если необходимо
+        # time.sleep(1)
+
+    
+    
 
     # Локаторы для элементов на главной странице
-    ORDER_BUTTON_TOP = (By.CLASS_NAME, ".button.Button_Button__ra12g")#root > div > div > div.Header_Header__214zg > div.Header_Nav__AGCXC > button.Button_Button__ra12g
-    ORDER_BUTTON_BOTTOM = (By.CLASS_NAME, ".Button_Button__ra12g Button_UltraBig__UU3Lp") #<button class="Button_Button__ra12g Button_UltraBig__UU3Lp">Заказать</button>
+    ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".button.Button_Button__ra12g")
+    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".Button_Button__ra12g.Button_UltraBig__UU3Lp")
     SCOOTER_LOGO = (By.NAME, "Scooter")
     YANDEX_LOGO = (By.NAME, "Yandex")
 
