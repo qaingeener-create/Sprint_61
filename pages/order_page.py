@@ -14,7 +14,7 @@ class OrderPage:
 
     # Локаторы для элементов на главной странице
     ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".Button_Button__ra12g")
-    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".Button_Button__ra12g.Button_UltraBig__UU3Lp")
+    ORDER_BUTTON_BOTTOM = (By.XPATH, '//div[@class = "Header_Nav__AGCXC"]/button[text() = "Заказать"]')
 
     
 
