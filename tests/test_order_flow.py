@@ -1,7 +1,7 @@
 import allure
 import pytest
 from config import BASE_URL
-from pages.main_page import MainPage
+from pages.order_page import OrderPage
 from selenium import webdriver
 
 class TestOrderFlow:
@@ -12,7 +12,7 @@ class TestOrderFlow:
             "surname": "Иванов",
             "address": "ул. Примерная, д. 1",
             "metro_station": "Щёлковская",
-            "phone": "1234567890"
+            "phone": "89765432100"
         },
         {
             "name": "Мария",
@@ -23,7 +23,7 @@ class TestOrderFlow:
         }
     ])
     def test_order_flow_top_button(self, driver, order_data: dict[str, str]):
-        page = MainPage(driver)
+        page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
 
@@ -37,7 +37,7 @@ class TestOrderFlow:
             order_page_top.click_next_button()
         
         with allure.step("Заполнить дополнительные поля"):
-            order_page_top.select_delivery_time("Когда привезти самокат")
+            order_page_top.select_delivery_time("12.12.2025")
             order_page_top.select_rental_period("Срок аренды")
             order_page_top.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
             order_page_top.enter_comment("Комментарий для курьера")
@@ -62,7 +62,7 @@ class TestOrderFlow:
         }
     ])
     def test_order_flow_bottom_button(self, driver, order_data: dict[str, str]):
-        page = MainPage(driver)
+        page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
 
@@ -85,7 +85,7 @@ class TestOrderFlow:
 
     @allure.title("Тестирование ссылки на логотип 'Самоката'")
     def test_scooter_logo_link(self, driver):
-        page = MainPage(driver)
+        page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
 
@@ -93,7 +93,7 @@ class TestOrderFlow:
 
     @allure.title("Тестирование ссылки на лого 'Яндекса'")
     def test_yandex_logo_link(self, driver):
-        page = MainPage(driver)
+        page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
 
