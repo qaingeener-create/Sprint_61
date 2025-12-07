@@ -21,6 +21,13 @@ class OrderPage:
     def click_order_button_top(self):
         self.driver.find_element(*self.ORDER_BUTTON_TOP).click()
         return OrderPage(self.driver)
+    
+    def click_order_button_bottom(self):
+        self.driver.find_element(*self.ORDER_BUTTON_BOTTOM).click()
+        return OrderPage(self.driver)
+
+
+
 
      # Локаторы для элементов на странице заказа
     input_name = (By.XPATH, "//input[@placeholder='* Имя']")
@@ -105,6 +112,5 @@ class OrderPage:
         # Проверка наличия сообщения об успешном создании заказа
         #return self.wait.until(lambda driver: driver.find_element(*self.SUCCESS_MESSAGE).is_displayed())
 
-
-  
     
+  
