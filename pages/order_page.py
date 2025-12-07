@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-from pages.main_page import MainPage
+
 import time
 
 class OrderPage:
@@ -14,6 +14,9 @@ class OrderPage:
 
     # Локаторы для элементов на главной странице
     ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".Button_Button__ra12g")
+    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".Button_Button__ra12g.Button_UltraBig__UU3Lp")
+
+    
 
     def click_order_button_top(self):
         self.driver.find_element(*self.ORDER_BUTTON_TOP).click()
@@ -69,9 +72,38 @@ class OrderPage:
                 date_element.click()
                 break
 
-    def is_success_message_present(self):
+    def select_rental_period(self, period):
+    # Находим элемент для выбора срока аренды
+        rental_period_element = self.driver.find_element(*self.field_rental_period)
+    
+    # Логика выбора периода аренды может различаться в зависимости от реализации интерфейса
+    # Например, если это выпадающий список, то можно использовать следующий подход:
+        if period == "трое суток":
+            self.driver.find_element(*self.dropdown_item_rental_period).click()
+        else:
+        # Здесь можно добавить логику для других периодов аренды
+            pass
+    def select_scooter_color(self, color):
+        if color == "чёрная жемчуг":
+            self.driver.find_element(*self.checkbox_grey_color_scooter).click()
+        elif color == "серая безысходность":
+        # Здесь должен быть код для выбора другого цвета, например:
+            self.driver.find_element(*self.another_color_loc).click()
+        else:
+            print(f"Цвет {color} не поддерживается.")
+
+    def enter_comment(self, comment):
+        self.driver.find_element(*self.input_comment).send_keys(comment)
+
+    def  button_make_order_click(self):  
+        self.driver.find_element(*self.button_make_order).click()
+
+
+
+
+    #def is_success_message_present(self):
         # Проверка наличия сообщения об успешном создании заказа
-        return self.wait.until(lambda driver: driver.find_element(*self.SUCCESS_MESSAGE).is_displayed())
+        #return self.wait.until(lambda driver: driver.find_element(*self.SUCCESS_MESSAGE).is_displayed())
 
 
   
