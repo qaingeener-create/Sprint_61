@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from pages.main_page import MainPage
+import time
 
 class OrderPage:
     def __init__(self, driver):
@@ -60,16 +61,13 @@ class OrderPage:
         self.driver.find_element(*self.input_date).click()
 
     # Находим элемент календаря и выбираем нужную дату
-    calendar = self.driver.find_element(*self.calendar)
-    date_elements = calendar.find_elements(*self.calendar_item)
+        calendar = self.driver.find_element(*self.calendar)
+        date_elements = calendar.find_elements(*self.calendar_item)
 
-    for date_element in date_elements:
-        if date_element.text == time:
-            date_element.click()
-            break
-
-
-
+        for date_element in date_elements:
+            if date_element.text == time:
+                date_element.click()
+                break
 
     def is_success_message_present(self):
         # Проверка наличия сообщения об успешном создании заказа
