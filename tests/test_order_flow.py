@@ -37,7 +37,7 @@ class TestOrderFlow:
             order_page_top.click_next_button()
         
         with allure.step("Заполнить дополнительные поля"):
-            order_page_top.select_delivery_time("12.12.2025")
+            order_page_top.select_delivery_time("Когда привезти самокат")
             order_page_top.select_rental_period("Срок аренды")
             order_page_top.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
             order_page_top.enter_comment("Комментарий для курьера")
