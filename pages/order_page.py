@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-
+from tests.config import BASE_URL
 import time
 
 class OrderPage:
@@ -10,7 +10,7 @@ class OrderPage:
         self.wait = WebDriverWait(driver, 10)
 
     def open(self):
-        self.driver.get("https://qa-scooter.praktikum-services.ru/")
+        self.driver.get(BASE_URL)
 
     # Локаторы для элементов на главной странице
     ORDER_BUTTON_TOP = (By.XPATH, '//div[contains(@class, "Home_FinishButton")]/button')

@@ -6,29 +6,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from data import order_data
     
 
 
 class TestOrderFlow:
     @allure.title("Тестирование потока заказа через верхнюю кнопку")
-    @pytest.mark.parametrize("order_data", [
-        {
-            "name": "Иван",
-            "surname": "Иванов",
-            "address": "ул. Примерная, д. 1",
-            "metro_station": "Щёлковская",
-            "phone": "89765432100"
-        },
-        {
-            "name": "Мария",
-            "surname": "Петрова",
-            "address": "пр-т Ленинский, д. 2",
-            "metro_station": "ВДНХ",
-            "phone": "89046777833"
-        }
-    ])
-    def test_order_flow_top_button(self, driver, order_data: dict[str, str]):
+    @pytest.mark.parametrize("order_data", order_data)
+    def test_order_flow(self,driver,order_data):
+
+    
         page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()

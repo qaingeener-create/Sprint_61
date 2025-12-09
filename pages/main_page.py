@@ -3,28 +3,28 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import time
+from tests.config import BASE_URL
 
 
-class MainPage:
+class MainPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
         
 
     def open(self):
-        self.driver.get("https://qa-scooter.praktikum-services.ru/")
+        self.driver.get(BASE_URL)
         self.scroll_into_view()  # Прокручиваем страницу сразу после открытия
 
     def scroll_into_view(self):
     #Прокручивает страницу так, чтобы нужный элемент стал видимым.
-        element = self.driver.find_element(By.XPATH, '//div[contains(@class, "Home_FAQ")]')
+        element = wait_for_element(By.XPATH, '//div[contains(@class, "Home_FAQ")]')
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        time.sleep(3)  # Приостанавливает выполнение на 1 секунду
+        
         
     def open_all_questions(self):
         for i in range(8):  # Предполагаем, что у нас есть 8 вопросов
             heading_id = f"accordion__heading-{i}"
-            time.sleep(3)  # Приостанавливает выполнение на 1 секунду
+            
             self.click_arrow(heading_id)
 
 
