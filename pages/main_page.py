@@ -48,8 +48,7 @@ class MainPage:
 
 
     # Локаторы для элементов на главной странице
-    ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".Button_Button__ra12g")
-    ORDER_BUTTON_BOTTOM = (By.CSS_SELECTOR, ".Button_Button__ra12g.Button_UltraBig__UU3Lp")
+    
     SCOOTER_LOGO = (By.NAME, "Scooter")
     YANDEX_LOGO = (By.NAME, "Yandex")
 

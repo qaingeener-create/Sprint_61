@@ -13,7 +13,7 @@ class OrderPage:
         self.driver.get("https://qa-scooter.praktikum-services.ru/")
 
     # Локаторы для элементов на главной странице
-    ORDER_BUTTON_TOP = (By.CSS_SELECTOR, ".Button_Button__ra12g")
+    ORDER_BUTTON_TOP = (By.XPATH, '//div[contains(@class, "Home_FinishButton")]/button')
     ORDER_BUTTON_BOTTOM = (By.XPATH, '//div[@class = "Header_Nav__AGCXC"]/button[text() = "Заказать"]')
 
     
