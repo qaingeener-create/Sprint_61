@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from tests.config import BASE_URL
+from config import BASE_URL
 
 
 class MainPage(BasePage):
