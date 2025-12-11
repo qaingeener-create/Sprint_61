@@ -35,7 +35,7 @@ class TestOrderFlow:
             order_page_top.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
             order_page_top.enter_comment("Комментарий для курьера")
         
-      #  assert order_page_top.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
+        assert order_page_top.is_success_message_present(), "Сообщение об успешном создании заказа не появилось"
 
     @allure.title("Тестирование потока заказа через нижнюю кнопку")
     @pytest.mark.parametrize("order_data", [
@@ -76,22 +76,31 @@ class TestOrderFlow:
             order_page_bottom.select_rental_period("Срок аренды")
             order_page_bottom.select_scooter_color("чёрная жемчуг")  # или "серая безысходность"
             order_page_bottom.enter_comment("Комментарий для курьера")
-        
+        with allure.step("Проверить отображение дополнительных полей"):
+            assert order_page_bottom.are_additional_fields_present(), "Дополнительные поля не отображаются"
+
         
 
     @allure.title("Тестирование ссылки на логотип 'Самоката'")
-    def test_scooter_logo_link(self, driver):
+    def test_scooter_logo_link(self, driver,):
         page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
-
-        
+        with allure.step("Нажать на логотип 'Самоката'"):
+            page.click_scooter_logo()
+        with allure.step("Проверить перенаправление на страницу 'Самоката'"):
+            assert page.is_scooter_page_opened(), "Перенаправление на страницу 'Самоката' не произошло"
 
     @allure.title("Тестирование ссылки на лого 'Яндекса'")
     def test_yandex_logo_link(self, driver):
         page = OrderPage(driver)
         with allure.step("Открыть главную страницу"):
             page.open()
+        with allure.step("Нажать на лого 'Яндекса'"):
+            page.click_yandex_logo()
+        with allure.step("Проверить перенаправление на страницу 'Яндекса'"):
+            assert page.is_yandex_page_opened(), "Перенаправление на страницу 'Яндекса' не произошло"
+
 
         
 

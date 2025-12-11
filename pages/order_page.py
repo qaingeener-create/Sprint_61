@@ -1,13 +1,12 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-from tests.config import BASE_URL
+from config import BASE_URL
 import time
 
 class OrderPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        super().__init__(driver)  # Используем инициализацию из BasePage
 
     def open(self):
         self.driver.get(BASE_URL)
@@ -16,20 +15,15 @@ class OrderPage(BasePage):
     ORDER_BUTTON_TOP = (By.XPATH, '//div[contains(@class, "Home_FinishButton")]/button')
     ORDER_BUTTON_BOTTOM = (By.XPATH, '//div[@class = "Header_Nav__AGCXC"]/button[text() = "Заказать"]')
 
-    
-
     def click_order_button_top(self):
-        self.driver.find_element(*self.ORDER_BUTTON_TOP).click()
+        self.find_element(self.ORDER_BUTTON_TOP).click()  # Используем метод find_element из BasePage
         return OrderPage(self.driver)
-    
+
     def click_order_button_bottom(self):
-        self.driver.find_element(*self.ORDER_BUTTON_BOTTOM).click()
+        self.find_element(self.ORDER_BUTTON_BOTTOM).click()
         return OrderPage(self.driver)
 
-
-
-
-     # Локаторы для элементов на странице заказа
+    # Локаторы для элементов на странице заказа
     input_name = (By.XPATH, "//input[@placeholder='* Имя']")
     input_lastname = (By.XPATH, "//input[@placeholder='* Фамилия']")
     input_address = (By.XPATH, "//input[@placeholder='* Адрес: куда привезти заказ']")
@@ -40,17 +34,23 @@ class OrderPage(BasePage):
 
     def fill_form(self, name, surname, address, metro_station, phone):
         # Методы для заполнения полей формы заказа
-        self.driver.find_element(*self.input_name).send_keys(name)
-        self.driver.find_element(*self.input_lastname).send_keys(surname)
-        self.driver.find_element(*self.input_address).send_keys(address)
+        self.find_element(self.input_name).send_keys(name)
+        self.find_element(self.input_lastname).send_keys(surname)
+        self.find_element(self.input_address).send_keys(address)
         # Выбор станции метро из выпадающего списка
-        metro_input = self.driver.find_element(*self.input_metro)
+        metro_input = self.find_element(self.input_metro)
         metro_input.send_keys(metro_station)
-    # Предполагаем, что после ввода текста в поле появляются варианты для выбора
-    # Выбираем первый предложенный вариант станции метро
-        self.wait.until(lambda driver: driver.find_element(*self.select_item_in_dropdown_metro)).click()
+        # Предполагаем, что после ввода текста в поле появляются варианты для выбора
+        # Выбираем первый предложенный вариант станции метро
+        self.wait.until(lambda driver: self.find_element(*self.select_item_in_dropdown_metro)).click()
 
-        self.driver.find_element(*self.input_phone).send_keys(phone)
+        self.find_element(self.input_phone).send_keys(phone)
+
+    # Остальные методы...
+
+    def click_next_button(self):
+        self.find_element(self.button_next).click()
+
 
     def click_next_button(self):
         self.driver.find_element(*self.button_next).click()
@@ -67,12 +67,12 @@ class OrderPage(BasePage):
     button_make_order = (By.XPATH, "//div[contains(@class, 'Order_Buttons')]/button[text()='Заказать']")
 
     def select_delivery_time(self, time):
-    # Открываем поле для ввода даты
-        self.driver.find_element(*self.input_date).click()
+        # Открываем поле для ввода даты
+        self.find_element(self.input_date).click()
 
-    # Находим элемент календаря и выбираем нужную дату
-        calendar = self.driver.find_element(*self.calendar)
-        date_elements = calendar.find_elements(*self.calendar_item)
+        # Находим элемент календаря и выбираем нужную дату
+        calendar = self.find_element(self.calendar)
+        date_elements = calendar.find_elements(*self.calendar_)
 
         for date_element in date_elements:
             if date_element.text == time:
