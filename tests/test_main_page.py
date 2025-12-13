@@ -1,36 +1,21 @@
-import pytest
 import allure
-from config import BASE_URL
-from pages.main_page import MainPage
-from selenium import webdriver
+from page_objects.main_page import MainPage
+from conftest import driver
+from data import TestData
+import pytest
 
-class TestDropdownList:
-    @allure.title("Проверка выпадающего списка вопросов")
-    @pytest.mark.parametrize("question_number, question_text", [
-        (0, "Сколько это стоит? И как оплатить?"),
-        (1, "Хочу сразу несколько самокатов! Так можно?"),
-        (2, "Как рассчитывается время аренды?"),
-        (3, "Можно ли заказать самокат прямо на сегодня?"),
-        (4, "Можно ли продлить заказ или вернуть самокат раньше?"),
-        (5, "Вы привозите зарядку вместе с самокатом?"),
-        (6, "Можно ли отменить заказ?"),
-        (7, "Я жизу за МКАДом, привезёте?")
-    ])
-    def test_dropdown_list(self, driver, question_number, question_text):
-        with allure.step("Инициализация драйвера и страницы"):
-            page = MainPage(driver)
-        
-        with allure.step("Открыть страницу"):
-            page.open()
-            question_id = f"accordion__heading-{question_number}"
-            
-        
-        with allure.step(f"Нажать на стрелку вопроса №{question_number}"):
-            question_id = f"accordion__heading-{question_number}"
-            page.click_arrow(question_id)  # метод, который кликает по стрелке вопроса с указанным номером
-        
-        with allure.step(f"Проверить, что текст для вопроса '{question_text}' открылся"):
-            assert page.is_text_opened(question_number), f"Текст для вопроса '{question_text}' не открылся при нажатии на стрелку"
+
+class TestMainPageFaq:
+    @allure.title('Проверка раздела "Вопросы о важном"')
+    @allure.description('Проверка появления нужного текста при нажатии на каждую иконку развертывания в разделе')
+    @pytest.mark.parametrize('question_number, expected_answer', TestData.test_data_expected_answer_faq)
+    def test_click_faq_expand_icons_text_is_expected(self, driver, question_number, expected_answer):
+        main_page = MainPage(driver)
+        main_page.scroll_to_faq_section()
+        main_page.wait_visibility_of_faq_items(question_number)
+        main_page.click_on_faq_items(question_number)
+        main_page.wait_visibility_of_faq_answer(question_number)
+        assert main_page.get_displayed_text_from_faq_answer(question_number) == expected_answer
  
 
 
